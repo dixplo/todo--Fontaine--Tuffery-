@@ -1,0 +1,14 @@
+{{> header}}
+{{> formTodo}}
+<template>
+    <v-card dark>
+      <v-card-title>
+        To do
+        <div class="flex-grow-1"></div>
+        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      </v-card-title>
+      <v-data-table v-model="selected" :headers="headers" :items="todos" :search="search" :single-select="false" item-key="id" show-select class="elevation-5"></v-data-table>
+    </v-card>
+</template>
+{{> footer}}
+{{{vue}}}
