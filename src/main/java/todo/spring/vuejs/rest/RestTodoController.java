@@ -31,8 +31,8 @@ public class RestTodoController {
 	}
 	
 	@GetMapping("{id}")
-	public Ctodo one(@PathVariable int id) {
-		Optional<Ctodo> tla =todoRepo.findById(id);
+	public Ctodo one(@PathVariable String id) {
+		Optional<Ctodo> tla =todoRepo.findById(Long.parseLong(id));
 		if (tla.isPresent()) {
 			return tla.get();
 		}
@@ -41,8 +41,9 @@ public class RestTodoController {
 	
 	@PostMapping("")
 	public @ResponseBody String ajout(@RequestBody String todo) {
+		todo =todo.substring(0, todo.length()-1);
 		for (String label : todo.split("%2C")) {
-			if (label != "") {
+			if (!label.isEmpty()) {
 				todoRepo.save(new Ctodo(label));
 			}
 		}
@@ -64,7 +65,7 @@ public class RestTodoController {
 	@DeleteMapping("{ids}")
 	public void delete(@PathVariable String ids) {
 		for (String id : ids.split(",")) {
-			todoRepo.deleteById(Integer.parseInt(id));
+			todoRepo.deleteById(Long.parseLong(id));
 		}
 	}
 }

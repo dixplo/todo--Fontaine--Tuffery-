@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import todo.spring.vuejs.entities.Ctodo;
 
-public interface ItodoRepositorie extends JpaRepository<Ctodo, Integer> {
+public interface ItodoRepositorie extends JpaRepository<Ctodo, Long> {
 	public List<Ctodo> findAllByOrderByPoidsDesc();
 }

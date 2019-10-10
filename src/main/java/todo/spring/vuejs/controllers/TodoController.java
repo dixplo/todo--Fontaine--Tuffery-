@@ -36,7 +36,7 @@ public class TodoController {
 				+ "{text:'description', value:'description'},"
 				+ "{text:'avancement', value:'avancement'},"
 				+ "{text:'poids', value:'poids'}]");
-		vue.addMethod("addTodo", "let self=this;"+Http.post("/rest/todos/", "this.text", "self.dialog=false;"
+		vue.addMethod("addTodo", "let self=this;"+Http.post("/rest/todos/", "this.text ", "self.dialog=false;"
 				+ "self.message='Todos added';"
 				+ "self.snackbar=true;"
 				+ "self.text='';"));
