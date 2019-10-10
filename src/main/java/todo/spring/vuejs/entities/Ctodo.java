@@ -13,7 +13,7 @@ public class Ctodo {
 	private long id;
 	private String label;
 	private String description;
-	private Float avancement;
+	private int avancement;
 	private int poids;
 	
 	public Ctodo(String label) {
@@ -21,7 +21,7 @@ public class Ctodo {
 		this.id = (long) 0;
 		this.label = label;
 		this.description = "";
-		this.avancement = (float) 0;
+		this.avancement = 0;
 		this.poids = 0;
 	}
 	
@@ -47,10 +47,10 @@ public class Ctodo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public float getAvancement() {
+	public int getAvancement() {
 		return avancement;
 	}
-	public void setAvancement(float avancement) {
+	public void setAvancement(int avancement) {
 		this.avancement = avancement;
 	}
 	public int getPoids() {

@@ -26,29 +26,35 @@ public class TodoController {
 	public String index(ModelMap map) {
 		vue.addData("todos", todoRepo.findAllByOrderByPoidsDesc());
 		vue.addData("dialog",false);
+		vue.addData("dialogform",false);
 		vue.addData("snackbar",false);
+		vue.addData("myform", false);
 		vue.addData("selected", new ArrayList<Integer>());
 		vue.addData("message");
 		vue.addData("search");
+		vue.addData("items");
 		vue.addData("text");
+		vue.addDataRaw("editedItem", "{id: 0, label: '', description: '',avancement: 0, poids: 0}");
 		vue.addDataRaw("headers", "[{text: 'id', align: 'left', sortable: false, value: 'id'},"
 				+ "{text:'label', value:'label'},"
 				+ "{text:'description', value:'description'},"
 				+ "{text:'avancement', value:'avancement'},"
-				+ "{text:'poids', value:'poids'}]");
+				+ "{text:'poids', value:'poids'},"
+				+ "{ text: 'Actions', value: 'action', sortable: false }]");
 		vue.addMethod("addTodo", "let self=this;"+Http.post("/rest/todos/", "this.text ", "self.dialog=false;"
 				+ "self.message='Todos added';"
 				+ "self.snackbar=true;"
-				+ "self.text='';"));
+				+ "self.text='';"
+				+ "console.log(response.data);"
+				+ "response.data.forEach(function(bla) {"
+					+ "self.todos.push(bla);"
+				+ "});"));
 		vue.addMethod("resetForm", "this.dialog=false; this.text='';");
 		vue.addMethod("Mydelete", "let self=this;"
-				+ "let select='';"
-				+ "this.selected.forEach(function(element) {"
-					+ "select+=element.id+',';"
-				+ "});"
-				+ "let $=' ';"+Http.delete("'/rest/todos/'+select+$", 
-						"self.selected.forEach(function(element) {"
-						+ "self.todos.splice(element.id,1);});"));
+				+ "let $=' ';"+Http.delete("'/rest/todos/'+item.id+$", 
+						"self.todos.splice(item.id,1);"), "item");
+		vue.addMethod("Editing", "let $=' ';let self=this;"+Http.put("'/rest/todos/'+self.items.id+$",(Object) "self.editedItem" ,"self.dialogform=false;"));
+		vue.addMethod("myitem", "this.items =item;this.editedItem =item; this.dialogform =true;", "item");
 		map.put("vue", vue);
 		return "index";
 	}

@@ -1,14 +1,49 @@
 {{> header}}
 {{> formTodo}}
+
 <template>
-    <v-card dark>
-      <v-card-title>
-        To do
-        <div class="flex-grow-1"></div>
-        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-      </v-card-title>
-      <v-data-table v-model="selected" :headers="headers" :items="todos" :search="search" :single-select="false" @click="Mydelete" item-key="id" show-select class="elevation-5"></v-data-table>
-    </v-card>
+    <v-data-table :headers="headers" :items="todos" class="elevation-5">
+        <template v-slot:top>
+            <v-toolbar flat color="white">
+                <v-card-title>
+                    To do
+                </v-card-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <div class="flex-grow-1"></div>
+                <v-dialog v-model="dialog" max-width="600px">
+                    <template v-slot:activator="{ on }">
+                            <v-btn color="primary" dark class="mb-2" v-on="on">New Todo</v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">Add Todo</span>
+                        </v-card-title>
+
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
+                                    <v-col cols="12" sm="12">
+                                        <v-textarea v-model="text" outlined name="text" label="Labels"
+                                            placeholder="Label,label,..."></v-textarea>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+
+                        <v-card-actions>
+                            <div class="flex-grow-1"></div>
+                            <v-btn color="blue darken-1" text @click="resetForm">Cancel</v-btn>
+                            <v-btn color="blue darken-1" text @click="addTodo">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-toolbar>
+        </template>
+        <template v-slot:item.action="{ item }">
+            <v-icon small class="mr-2" @click="myitem(item)">edit</v-icon>
+            <v-icon small @click="Mydelete(item)">delete</v-icon>
+        </template>
+    </v-data-table>
 </template>
 {{> footer}}
 {{{vue}}}

@@ -1,5 +1,6 @@
 package todo.spring.vuejs.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,14 +41,16 @@ public class RestTodoController {
 	}
 	
 	@PostMapping("")
-	public @ResponseBody String ajout(@RequestBody String todo) {
+	public @ResponseBody List<Ctodo> ajout(@RequestBody String todo) {
 		todo =todo.substring(0, todo.length()-1);
+		List<Ctodo> list =new ArrayList<Ctodo>();
 		for (String label : todo.split("%2C")) {
 			if (!label.isEmpty()) {
 				todoRepo.save(new Ctodo(label));
+				list.add(new Ctodo(label));
 			}
 		}
-		return todo;
+		return list;
 	}
 	
 	@PutMapping("{id}")

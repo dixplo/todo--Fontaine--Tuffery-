@@ -1,37 +1,37 @@
-<v-btn color="primary" text @click="Mydelete">Delete</v-btn>
-<template>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Add Todo</v-btn>
-      </template>
-      <v-card>
+<v-snackbar v-model="snackbar">
+  <% message %>
+  <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+</v-snackbar>
+
+<v-dialog v-model="dialogform" max-width="600px">
+    <v-card>
         <v-card-title>
-          <span class="headline">Add Todo</span>
+            <span class="headline">Edit Todo</span>
         </v-card-title>
+
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="12">
-                <v-textarea v-model="text" outlined name="text" label="Labels" placeholder="Label,label,..."></v-textarea>
-              </v-col>
-            </v-row>
-          </v-container>
+            <v-container>
+                <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.label" label="Label"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.description" label="Description"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.avancement" label="Avancement"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.poids" label="Poids"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-container>
         </v-card-text>
+
         <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="resetForm">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="addTodo">Save</v-btn>
+            <div class="flex-grow-1"></div>
+            <v-btn color="blue darken-1" text @click="dialogform =false">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="Editing">Save</v-btn>
         </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
-</template>
-
-
-
-
-  <v-snackbar v-model="snackbar">
-    <% message %>
-    <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-  </v-snackbar>
+    </v-card>
+</v-dialog>
